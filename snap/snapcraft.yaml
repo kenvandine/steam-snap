@@ -512,6 +512,43 @@ apps:
       - removable-media
       - upower-observe
       - uinput
+  deck:
+    command-chain: [snap/command-chain/alsa-launch, bin/desktop-launch]
+    command: usr/lib/steam/bin_steam.sh -no-cef-sandbox -gamepadui
+    environment:
+      HOME: $SNAP_USER_COMMON
+      #LIBGL_DEBUG: verbose
+      TMPDIR: $XDG_RUNTIME_DIR
+      ALWAYS_USE_PULSEAUDIO: 1
+      PKG_CONFIG_PATH: $SNAP/usr/lib/i386-linux-gnu/pkgconfig:$SNAP/usr/lib/x86_64-linux-gnu/pkgconfig:$SNAP/usr/lib/pkgconfig
+      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages
+      GI_TYPELIB_PATH: $SNAP/usr/lib/x86_64-linux-gnu/girepository-1.0
+    plugs:
+      - shmem
+      - desktop
+      - desktop-legacy
+      - wayland
+      - home
+      - x11
+      - gsettings
+      - hardware-observe
+      - mount-observe
+      - system-observe
+      - joystick
+      - network
+      - network-bind
+      - opengl
+      - audio-playback
+      - audio-record
+      - screen-inhibit-control
+      - process-control
+      - bluez
+      - network-control
+      - fuse-support
+      - steam-support
+      - removable-media
+      - upower-observe
+      - uinput
   report:
     command-chain: [bin/desktop-launch]
     command: bin/steamreport
