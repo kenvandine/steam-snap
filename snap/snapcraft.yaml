@@ -534,6 +534,8 @@ apps:
       ALWAYS_USE_PULSEAUDIO: 1
       DISABLE_WAYLAND: 1
       PKG_CONFIG_PATH: $SNAP/usr/lib/i386-linux-gnu/pkgconfig:$SNAP/usr/lib/x86_64-linux-gnu/pkgconfig:$SNAP/usr/lib/pkgconfig
+      STEAM_LINUX_RUNTIME_VERBOSE: 1
+      STEAM_LINUX_RUNTIME_LOG: 1
     plugs:
       - shmem
       - desktop
