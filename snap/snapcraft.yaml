@@ -7,10 +7,9 @@ description: |
 adopt-info: steam
 grade: stable
 confinement: strict
+base: core24
 platforms:
   amd64:
-    build-on: [amd64]
-base: core24
 compression: lzo
 assumes:
   - snapd2.62
@@ -61,16 +60,18 @@ layout:
     symlink: $SNAP/graphics/usr/lib/x86_64-linux-gnu/libvulkan_radeon.so
   /usr/lib/i386-linux-gnu/libvulkan_radeon.so:
     symlink: $SNAP/graphics/usr/lib/i386-linux-gnu/libvulkan_radeon.so
-  /usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0.0.0:
-    symlink: $SNAP/graphics/usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0.0.0
+  /usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0.1.0:
+    symlink: $SNAP/graphics/usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0.1.0
   /usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0:
-    symlink: $SNAP/graphics/usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0.0.0
+    symlink: $SNAP/graphics/usr/lib/x86_64-linux-gnu/libxcb-dri3.so.0.1.0
   /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0:
     symlink: $SNAP/graphics/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
   /usr/lib/x86_64-linux-gnu/libxcb.so:
     symlink: $SNAP/graphics/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
   /usr/lib/x86_64-linux-gnu/libxcb.so.1:
     symlink: $SNAP/graphics/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+  /usr/lib/x86_64-linux-gnu/gbm/dri_gbm.so:
+    symlink: $SNAP/graphics/usr/lib/x86_64-linux-gnu/gbm/dri_gbm.so
   /etc/ld.so.cache:
     bind-file: $SNAP_DATA/etc/ld.so.cache
   /etc/fonts:
@@ -126,6 +127,8 @@ hooks:
 environment:
   LD_LIBRARY_PATH: $SNAP/graphics/usr/lib/i386-linux-gnu:$SNAP/graphics/usr/lib:$SNAP/usr/lib/i386-linux-gnu:$SNAP/usr/lib/x86_64-linux-gnu:$SNAP/lib/i386-linux-gnu:$SNAP/usr/lib/i386-linux-gnu/pulseaudio${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
   LIBGL_DRIVERS_PATH: $SNAP/graphics/usr/lib/i386-linux-gnu/dri:$SNAP/graphics/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH:+:$LIBGL_DRIVERS_PATH}
+  GI_TYPELIB_PATH: $SNAP/usr/lib/x86_64-linux-gnu/girepository-1.0
+  PYTHONPATH: $SNAP/usr/lib/python3/dist-packages
 
 parts:
   launcher:
@@ -411,6 +414,49 @@ parts:
       - libxss1:amd64
       - libxss1:i386
       - x11-xserver-utils
+      - libxtst6:amd64
+      - libxtst6:i386
+      - libibus-1.0-5
+      - libxrandr2:amd64
+      - libxrandr2:i386
+      - libxi6:amd64
+      - libxi6:i386
+      - libpipewire-0.3-0t64:amd64
+      - libpipewire-0.3-0t64:i386
+      - libopenal1:amd64
+      - libopenal1:i386
+      - libpulse0:amd64
+      - libpulse0:i386
+      - libnm0:amd64
+      - libnm0:i386
+      - libglib2.0-0t64:amd64
+      - libglib2.0-0t64:i386
+      - libxfixes3:amd64
+      - libxfixes3:i386
+      - libgtk2.0-0t64:amd64
+      - libgtk2.0-0t64:i386
+      - libxcb-res0:amd64
+      - libxcb-res0:i386
+      - liblzma5:amd64
+      - liblzma5:i386
+      - libice6:i386
+      - libice6:amd64
+      - libsm6:i386
+      - libsm6:amd64
+      - libsdl2-2.0-0:i386
+      - libsdl2-2.0-0:amd64
+      - libaom3:i386
+      - libaom3:amd64
+      - libavcodec60:i386
+      - libavcodec60:amd64
+      - libavutil58:i386
+      - libavutil58:amd64
+      - libdav1d7:i386
+      - libdav1d7:amd64
+      - libswscale7:i386
+      - libswscale7:amd64
+      - libvpx9:i386
+      - libvpx9:amd64
     override-build: |
       craftctl default
       # Set the snap version from the .deb package version
@@ -488,8 +534,6 @@ apps:
       ALWAYS_USE_PULSEAUDIO: 1
       DISABLE_WAYLAND: 1
       PKG_CONFIG_PATH: $SNAP/usr/lib/i386-linux-gnu/pkgconfig:$SNAP/usr/lib/x86_64-linux-gnu/pkgconfig:$SNAP/usr/lib/pkgconfig
-      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages
-      GI_TYPELIB_PATH: $SNAP/usr/lib/x86_64-linux-gnu/girepository-1.0
     plugs:
       - shmem
       - desktop
@@ -521,8 +565,6 @@ apps:
     command: bin/steamreport
     environment:
       DISABLE_WAYLAND: 1
-      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages
-      GI_TYPELIB_PATH: $SNAP/usr/lib/x86_64-linux-gnu/girepository-1.0
     plugs:
       - system-observe
       - hardware-observe
