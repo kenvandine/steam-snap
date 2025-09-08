@@ -188,7 +188,7 @@ parts:
     build-packages:
       - libasound2-dev
     stage-packages:
-      - libasound2
+      - libasound2t64
       - libasound2-plugins
       - libmp3lame0
       - yad
@@ -462,6 +462,7 @@ parts:
       # Set the snap version from the .deb package version
       craftctl set version=$(dpkg-parsechangelog -l $CRAFT_PART_INSTALL/usr/share/doc/steam-launcher/changelog.*.gz -S Version | sed -e s/1://g)
     prime:
+      - -usr/include
       - -usr/share/doc
       - -usr/share/man
       - -usr/share/bug
@@ -477,8 +478,8 @@ parts:
       - -usr/lib/*/libvulkan*
       - -usr/lib/*/libVk*
       - -usr/lib/*/libLLVM*
-      - -usr/lib/*/libgallium*.so
-      - -usr/include
+      - -usr/lib/*/libgallium* # provided by gaming-graphics-core24
+      - -usr/lib/*/libasound.so* # conflicts with alsa-mixin
     override-prime: |
       set -eux
       craftctl default
