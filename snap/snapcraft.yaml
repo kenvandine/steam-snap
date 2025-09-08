@@ -477,6 +477,8 @@ parts:
       - -usr/lib/*/libvulkan*
       - -usr/lib/*/libVk*
       - -usr/lib/*/libLLVM*
+      - -usr/lib/*/libgallium*.so
+      - -usr/include
     override-prime: |
       set -eux
       craftctl default
