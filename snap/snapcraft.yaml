@@ -78,7 +78,7 @@ layout:
     bind: $SNAP/etc/fonts
 
 plugs:
-  gaming-mesa:
+  gaming-graphics-core24:
     interface: content
     target: $SNAP/graphics
     default-provider: gaming-graphics-core24
@@ -518,7 +518,7 @@ parts:
     after: [steam, conditioning]
     plugin: nil
     build-snaps:
-      - gaming-graphics-core24/edge
+      - gaming-graphics-core24/kisak-fresh/stable
     override-prime: |
       set -eux
       cd /snap/gaming-graphics-core24/current/usr/lib
