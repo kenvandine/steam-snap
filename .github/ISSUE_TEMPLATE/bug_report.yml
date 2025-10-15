@@ -1,7 +1,7 @@
 name: Bug Report
 description: Create an issue about a problem with the Snap
 title: "<title>"
-labels: [type/bug]
+labels: [bug]
 body:
 - type: checkboxes
   attributes:
