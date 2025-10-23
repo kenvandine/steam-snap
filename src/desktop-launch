@@ -6,10 +6,10 @@
 # shellcheck disable=SC2034
 START=$(date +%s.%N)
 
-if ! snapctl is-connected "gaming-mesa"; then
+if ! snapctl is-connected "gaming-graphics-core24"; then
   echo "ERROR: not connected to the gaming-mesa content interface."
   echo "To connect:"
-  echo "sudo snap connect steam:gaming-mesa gaming-graphics-core22"
+  echo "sudo snap connect steam:gaming-graphics-core24 gaming-graphics-core24"
   exit 1
 fi
 
@@ -53,7 +53,8 @@ chmod 700 "$XDG_CONFIG_HOME"
 if [[ -f "$XDG_CONFIG_HOME/user-dirs.dirs.md5sum" ]]; then
   if [[ "$(md5sum < "$SNAP_REAL_HOME/.config/user-dirs.dirs")" != "$(cat "$XDG_CONFIG_HOME/user-dirs.dirs.md5sum")" ||
         ( -f "$XDG_CONFIG_HOME/user-dirs.locale.md5sum" &&
-          "$(md5sum < "$SNAP_REAL_HOME/.config/user-dirs.locale")" != "$(cat "$XDG_CONFIG_HOME/user-dirs.locale.md5sum")" ) ]]; then
+          "$(md5sum < "$SNAP_REAL_HOME/.config/user-dirs.locale")" != "$(cat "$XDG_CONFIG_HOME/user-dirs.locale.md5sum")" )
+  ]]; then
     needs_update=true
   fi
 else
