@@ -541,6 +541,7 @@ apps:
       STEAM_LINUX_RUNTIME_LOG: 1
     plugs:
       - shmem
+      - camera
       - desktop
       - desktop-legacy
       - wayland
