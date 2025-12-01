@@ -10,6 +10,7 @@ confinement: strict
 base: core24
 platforms:
   amd64:
+  arm64:
 compression: lzo
 assumes:
   - snapd2.62
@@ -31,6 +32,12 @@ package-repositories:
     components: [steam]
     architectures: [amd64, i386]
     key-id: BA1816EF8E75005FCF5E27A1F24AEA9FB05498B7
+  - type: apt
+    url: https://ppa.launchpadcontent.net/fex-emu/fex/ubuntu
+    suites: [noble]
+    components: [main]
+    architectures: [arm64]
+    key-id: EDB98BFE8A2310DC9C4A376E76DBFEBEA206F5AC
 
 layout:
   /usr/lib/steam:
@@ -131,8 +138,13 @@ environment:
   PYTHONPATH: $SNAP/usr/lib/python3/dist-packages
 
 parts:
+  amd64-content:
+    plugin: dump
+    build-on: [arm64]
+    source: ./steam_218_amd64
   launcher:
     plugin: nil
+    build-on: [amd64]
     source: ./src
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/bin
@@ -183,6 +195,7 @@ parts:
 
   alsa-mixin:
     plugin: dump
+    build-on: [amd64]
     source: https://github.com/diddlesnaps/snapcraft-alsa.git
     source-subdir: snapcraft-assets
     build-packages:
@@ -219,6 +232,7 @@ parts:
 
   ninja:
     plugin: nil
+    build-on: [amd64]
     source: https://github.com/ninja-build/ninja.git
     source-tag: "v1.13.1"
     override-build: |
@@ -241,6 +255,7 @@ parts:
   meson-deps:
     after: [ninja]
     plugin: nil
+    build-on: [amd64]
     source: https://github.com/mesonbuild/meson.git
     source-tag: "1.8.3"
     override-build: |
@@ -261,6 +276,7 @@ parts:
     source: https://github.com/flightlessmango/MangoHud.git
     source-tag: "v0.8.1"
     plugin: meson
+    build-on: [amd64]
     organize:
       snap/steam/current/usr: usr
     build-environment:
@@ -300,6 +316,7 @@ parts:
     source: https://github.com/flightlessmango/MangoHud.git
     source-tag: "v0.8.1"
     plugin: meson
+    build-on: [amd64]
     organize:
       snap/steam/current/usr: usr
     meson-parameters:
@@ -318,6 +335,7 @@ parts:
     source: https://github.com/FeralInteractive/gamemode.git
     source-tag: "1.8.2"
     plugin: meson
+    build-on: [amd64]
     build-environment:
       - CC: gcc -m32
       - CXX: g++ -m32
@@ -341,6 +359,7 @@ parts:
     source: https://github.com/FeralInteractive/gamemode.git
     source-tag: "1.8.2"
     plugin: meson
+    build-on: [amd64]
     organize:
       snap/steam/current/usr: usr
     meson-parameters:
@@ -356,6 +375,7 @@ parts:
 
   debug-tools:
     plugin: nil
+    build-on: [amd64]
     stage-packages:
       - jq
     prime:
@@ -365,6 +385,7 @@ parts:
 
   tests:
     plugin: dump
+    build-on: [amd64]
     source: tests
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/tests
@@ -372,10 +393,12 @@ parts:
 
   steam-devices:
     plugin: dump
+    build-on: [amd64]
     source: https://github.com/ValveSoftware/steam-devices.git
 
   steam:
     plugin: nil
+    build-on: [amd64]
     #source: http://repo.steampowered.com/steam/archive/precise/steam_latest.deb
     build-packages:
       - dpkg-dev
@@ -487,6 +510,7 @@ parts:
 
   yaru-skin:
     plugin: nil
+    build-on: [amd64]
     source: https://github.com/ubuntu/yaru-for-steam.git
     source-type: git
     stage-packages:
@@ -501,6 +525,7 @@ parts:
   conditioning:
     after: [steam]
     plugin: nil
+    build-on: [amd64]
     build-packages:
       - shared-mime-info
       - gtk-update-icon-cache
@@ -517,6 +542,7 @@ parts:
   cleanup:
     after: [steam, conditioning]
     plugin: nil
+    build-on: [amd64]
     build-snaps:
       - gaming-graphics-core24/kisak-fresh/stable
     override-prime: |
