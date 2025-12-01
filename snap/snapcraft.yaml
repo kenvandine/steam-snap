@@ -135,8 +135,15 @@ environment:
 parts:
   amd64-content:
     plugin: dump
-    - build-on: [arm64]
     source: ./steam_218_amd64
+  amd64-rootfs:
+    plugin: dump
+    source: ./x86_rootfs
+  fex:
+    plugin: nil
+    stage-packages:
+      - fex-emu-armv8.0
+      - fex-emu-wine
 
 apps:
   steam:
