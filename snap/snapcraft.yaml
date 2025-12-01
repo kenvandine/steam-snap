@@ -26,14 +26,6 @@ lint:
         - lib32/**
         - usr/lib32/**
 
-package-repositories:
-  - type: apt
-    url: https://ppa.launchpadcontent.net/fex-emu/fex/ubuntu
-    suites: [noble]
-    components: [main]
-    architectures: [arm64]
-    key-id: EDB98BFE8A2310DC9C4A376E76DBFEBEA206F5AC
-
 layout:
   /usr/lib/steam:
     bind: $SNAP/usr/lib/steam
@@ -80,10 +72,6 @@ layout:
     bind: $SNAP/etc/fonts
 
 plugs:
-  gaming-graphics-core24:
-    interface: content
-    target: $SNAP/graphics
-    default-provider: gaming-graphics-core24
   gtk-3-themes:
     interface: content
     target: $SNAP/share/themes
@@ -139,12 +127,13 @@ parts:
   amd64-rootfs:
     plugin: dump
     source: ./x86_rootfs
-  fex:
-    plugin: nil
-    stage-packages:
-      - fex-emu-armv8.0
-      - fex-emu-wine
-
+  fex-emu:
+    plugin: dump
+    source: ./fex-emu
+  fex-emu-wine:
+    plugin: dump
+    source: ./fex-emu-wine
+  
 apps:
   steam:
     command-chain: [snap/command-chain/alsa-launch, bin/desktop-launch]
