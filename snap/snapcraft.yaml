@@ -7,7 +7,7 @@ description: |
   savegame and screenshot functionality, and many social features.
 adopt-info: steam
 grade: stable
-confinement: classic
+confinement: strict
 base: core24
 platforms:
   arm64:
@@ -98,6 +98,11 @@ plugs:
     interface: personal-files
     write:
       - $HOME/.local/share/icons
+  user-fex-config:
+    interface: personal-files
+    write:
+      - $HOME/snap/steam/common
+      - $HOME/snap/steam/common/.fex-emu
   desktop:
     mount-host-font-cache: false
   shmem:
