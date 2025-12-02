@@ -140,8 +140,7 @@ parts:
   
 apps:
   steam:
-    command-chain: [usr/bin/fex_launcher.sh, bin/desktop-launch]
-    command: usr/bin/fex_launcher.sh usr/lib/steam/bin_steam.sh -no-cef-sandbox
+    command: usr/bin/fex_launcher.sh
     environment:
       HOME: $SNAP_USER_COMMON
       #LIBGL_DEBUG: verbose
