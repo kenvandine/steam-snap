@@ -1,4 +1,5 @@
 name: steam
+version: '218'
 summary: Launcher for the Steam software distribution service
 description: |
   Steam is a software distribution service with an online store, automated
@@ -126,17 +127,20 @@ parts:
     source: ./steam_218_amd64
   amd64-rootfs:
     plugin: dump
-    source: ./x86_rootfs
+    source: ./amd64_rootfs
   fex-emu:
     plugin: dump
     source: ./fex-emu
   fex-emu-wine:
     plugin: dump
     source: ./fex-emu-wine
+  fex-config:
+    plugin: dump
+    source: ./fex_config
   
 apps:
   steam:
-    command-chain: [snap/command-chain/alsa-launch, bin/desktop-launch]
+    command-chain: [usr/bin/FEXBash, bin/desktop-launch]
     command: usr/bin/FEXBash usr/lib/steam/bin_steam.sh -no-cef-sandbox
     environment:
       HOME: $SNAP_USER_COMMON
@@ -147,6 +151,7 @@ apps:
       PKG_CONFIG_PATH: $SNAP/usr/lib/i386-linux-gnu/pkgconfig:$SNAP/usr/lib/x86_64-linux-gnu/pkgconfig:$SNAP/usr/lib/pkgconfig
       STEAM_LINUX_RUNTIME_VERBOSE: 1
       STEAM_LINUX_RUNTIME_LOG: 1
+      FEX_APP_DATA_LOCATION: $SNAP_DATA/fex_config
     plugs:
       - shmem
       - desktop
