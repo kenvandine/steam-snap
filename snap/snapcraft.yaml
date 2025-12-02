@@ -114,6 +114,13 @@ slots:
     interface: dbus
     bus: session
     name: com.steampowered.PressureVessel.LaunchAlongsideSteam
+  user-fex-config-slot:
+    interface: content
+    content: socket-directory
+    write:
+      - $HOME/snap/steam/common
+      - $HOME/snap/steam/common/.fex-emu
+
 
 hooks:
   configure:
