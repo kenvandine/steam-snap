@@ -140,8 +140,8 @@ parts:
   
 apps:
   steam:
-    command-chain: [usr/bin/FEXBash, bin/desktop-launch]
-    command: usr/bin/FEXBash usr/lib/steam/bin_steam.sh -no-cef-sandbox
+    command-chain: [usr/bin/fex_launcher.sh, bin/desktop-launch]
+    command: usr/bin/fex_launcher.sh usr/lib/steam/bin_steam.sh -no-cef-sandbox
     environment:
       HOME: $SNAP_USER_COMMON
       #LIBGL_DEBUG: verbose
@@ -151,8 +151,6 @@ apps:
       PKG_CONFIG_PATH: $SNAP/usr/lib/i386-linux-gnu/pkgconfig:$SNAP/usr/lib/x86_64-linux-gnu/pkgconfig:$SNAP/usr/lib/pkgconfig
       STEAM_LINUX_RUNTIME_VERBOSE: 1
       STEAM_LINUX_RUNTIME_LOG: 1
-      FEX_APP_CONFIG_LOCATION: $SNAP_DATA/fex_config
-      FEX_SERVERSOCKETPATH: /tmp/FEXServer.Socket
     plugs:
       - shmem
       - desktop
