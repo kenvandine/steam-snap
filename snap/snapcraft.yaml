@@ -87,6 +87,9 @@ plugs:
     default-provider: gtk-common-themes
   dot-local-share-steam:
     interface: personal-files
+    read:
+      - $HOME/.local/share/Steam
+      - $HOME/Steam
     write:
       - $HOME/.local/share/Steam
       - $HOME/Steam
@@ -103,6 +106,7 @@ plugs:
     write:
       - $HOME/snap/steam/common
       - $HOME/snap/steam/common/.fex-emu
+      - $HOME/.fex-emu
   desktop:
     mount-host-font-cache: false
   shmem:
@@ -120,7 +124,7 @@ slots:
     write:
       - $HOME/snap/steam/common
       - $HOME/snap/steam/common/.fex-emu
-
+      - $HOME/.fex-emu
 
 hooks:
   configure:
@@ -173,6 +177,7 @@ apps:
       - removable-media
       - upower-observe
       - uinput
+      - dot-local-share-steam
   report:
     command-chain: [bin/desktop-launch]
     command: usr/bin/FEXBash bin/steamreport
