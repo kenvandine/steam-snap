@@ -115,6 +115,7 @@ parts:
   
 apps:
   steam:
+    command-chain: [bin/desktop-launch]
     command: usr/bin/fex_launcher.sh
     plugs:
       - shmem
