@@ -1,10 +1,8 @@
 #!/bin/sh
 mkdir -p /home/$USER/snap/steam/common/.fex-emu/
-mkdir -p /home/$USER/.fex-emu/
-mkdir -p /home/$USER/.fex-emu/nvidia_ngx_config
-export FEX_STEAM_NGX_LIB_VERSION_FILE=/home/$USER/.fex-emu/nvidia_ngx_config/ngx_lib_version.txt
+#mkdir -p /home/$USER/.fex-emu/
 #export FEX_SERVERSOCKETPATH=/home/mitchell/snap/steam/current/.fex-emu/FEXServer.Socket
-export FEX_SERVERSOCKETPATH=/home/$USER/.fex-emu/FEXServer.Socket
+export FEX_SERVERSOCKETPATH=/home/$USER/snap/steam/common/.fex-emu/FEXServer.Socket
 export FEX_APP_CONFIG_LOCATION=/snap/steam/current/fex_config/
 
 #nvidia_driver_version=$(cat /sys/module/nvidia/version 2>/dev/null || true)

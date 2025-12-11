@@ -390,11 +390,13 @@ export APPIMAGE_EXTRACT_AND_RUN=1
 
 #$SNAP/bin/nvidia32 &
 #"$@"
-export STEAM_DIR="/home/$USER/.local/share/Steam"
+
+export STEAM_DIR="$SNAP_USER_COMMON/.local/share/Steam"
 echo "STEAMDIR: $STEAM_DIR"
-export HOME="/home/$USER"
+export HOME="$SNAP_USER_COMMON"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+
 /snap/steam/current/usr/lib/steam/bin_steam.sh -no-cef-sandbox
 #killall steam-runtime-launcher-service
