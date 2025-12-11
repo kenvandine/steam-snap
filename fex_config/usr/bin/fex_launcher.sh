@@ -5,6 +5,8 @@ mkdir -p /home/$USER/snap/steam/common/.fex-emu/
 export FEX_SERVERSOCKETPATH=/home/$USER/snap/steam/common/.fex-emu/FEXServer.Socket
 export FEX_APP_CONFIG_LOCATION=/snap/steam/current/fex_config/
 
+mkdir -p /home/$USER/snap/steam/common/.fex-emu/nvidia_ngx_config
+
 #nvidia_driver_version=$(cat /sys/module/nvidia/version 2>/dev/null || true)
 nvidia_driver_version=""
 
@@ -24,8 +26,7 @@ if [[ "$(cat "$FEX_STEAM_NGX_LIB_VERSION_FILE")" != "$nvidia_driver_version" ]];
 	nvidia_driver_version=$(cat /sys/module/nvidia/version)
 	wget https://download.nvidia.com/XFree86/Linux-x86_64/$nvidia_driver_version/NVIDIA-Linux-x86_64-$nvidia_driver_version.run
 
-	ubuntu=$(jq -r '.Config.RootFS' $HOME/.fex-emu/Config.json)
-	rootfs="$HOME/.fex-emu/RootFS/$ubuntu"
+	rootfs="/snap/steam/current/x86_rootfs/"
 	 
 	runfile=$(realpath ./NVIDIA-Linux-x86_64-$nvidia_driver_version.run)
 	runfilename=$(basename $runfile)
@@ -76,7 +77,7 @@ if [[ "$(cat "$FEX_STEAM_NGX_LIB_VERSION_FILE")" != "$nvidia_driver_version" ]];
 
 	popd >/dev/null
 
-	echo $nvidia_driver_version > /home/$USER/.fex-emu/nvidia_ngx_config/ngx_lib_version.txt
+	echo $nvidia_driver_version > /home/$USER/snap/steam/common/.fex-emu/nvidia_ngx_config/ngx_lib_version.txt
 fi
 
 
