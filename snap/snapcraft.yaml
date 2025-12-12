@@ -100,10 +100,14 @@ parts:
       - gaming-graphics-core24/candidate
   amd64-content:
     plugin: dump
-    source: ./steam_218_amd64
+    source: https://github.com/MitchellAugustin/steam-snap/releases/download/amd64-components-12-12-25.1/steam_218_amd64.tar.gz
+    organize:
+        steam_218_amd64: .
   amd64-rootfs:
     plugin: dump
-    source: ./amd64_rootfs
+    source: https://github.com/MitchellAugustin/steam-snap/releases/download/amd64-components-12-12-25.1/amd64_rootfs.tar.gz
+    organize:
+        amd64_rootfs: .
   fex-emu:
     plugin: dump
     source: ./fex-emu
@@ -149,49 +153,3 @@ apps:
       - upower-observe
       - uinput
       - dot-local-share-steam
-  report:
-    command-chain: [bin/desktop-launch]
-    command: usr/bin/FEXBash bin/steamreport
-    environment:
-      DISABLE_WAYLAND: 1
-    plugs:
-      - system-observe
-      - hardware-observe
-      - opengl
-      - x11
-      - desktop
-  vulkaninfo:
-    command-chain: [bin/desktop-launch]
-    command: usr/bin/FEXBash bin/vulkaninfo
-    plugs:
-      - opengl
-      - x11
-      - desktop
-  vkcube:
-    command-chain: [bin/desktop-launch]
-    command: usr/bin/FEXBash bin/vkcube
-    plugs:
-      - opengl
-      - x11
-      - desktop
-  glxinfo:
-    command-chain: [bin/desktop-launch]
-    command: usr/bin/FEXBash bin/glxinfo
-    plugs:
-      - opengl
-      - x11
-      - desktop
-  glxgears:
-    command-chain: [bin/desktop-launch]
-    command: usr/bin/FEXBash bin/glxgears
-    plugs:
-      - opengl
-      - x11
-      - desktop
-  test:
-    command-chain: [bin/desktop-launch]
-    command: usr/bin/FEXBash tests/run.sh
-    plugs:
-      - opengl
-      - x11
-      - desktop
