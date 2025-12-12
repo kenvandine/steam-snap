@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 mkdir -p /home/$USER/snap/steam/common/.fex-emu/
 #mkdir -p /home/$USER/.fex-emu/
 #export FEX_SERVERSOCKETPATH=/home/mitchell/snap/steam/current/.fex-emu/FEXServer.Socket
@@ -6,25 +6,37 @@ export FEX_SERVERSOCKETPATH=/home/$USER/snap/steam/common/.fex-emu/FEXServer.Soc
 export FEX_APP_CONFIG_LOCATION=/snap/steam/current/fex_config/
 
 mkdir -p /home/$USER/snap/steam/common/.fex-emu/nvidia_ngx_config
+export FEX_STEAM_NGX_LIB_VERSION_FILE=/home/$USER/snap/steam/common/.fex-emu/nvidia_ngx_config/ngx_lib_version.txt
+touch $FEX_STEAM_NGX_LIB_VERSION_FILE
 
-#nvidia_driver_version=$(cat /sys/module/nvidia/version 2>/dev/null || true)
-nvidia_driver_version=""
-
+nvidia_driver_version=$(cat /sys/module/nvidia/version 2>/dev/null || true)
 
 # Check if the NGX library needs updates, and install if so.
-if [[ "$(cat "$FEX_STEAM_NGX_LIB_VERSION_FILE")" != "$nvidia_driver_version" ]]; then
-	if [ -z "$nvidia_driver_version" ]; then
-		if zenity --question --text="Could not detect NVIDIA driver version. DLSS libraries will not be installed. (This is expected if you are not using an NVIDIA GPU.)" --title="Launch Steam without DLSS?"; then
-			echo "Continuing without DLSS"
-		else
-			exit 1
-		fi
-	fi
+if [ "$(cat "$FEX_STEAM_NGX_LIB_VERSION_FILE")" != "$nvidia_driver_version" ]; then
+	#if [ -z "$nvidia_driver_version" ]; then
+	#	if zenity --question --text="Could not detect NVIDIA driver version. DLSS libraries will not be installed. (This is expected if you are not using an NVIDIA GPU.)" --title="Launch Steam without DLSS?"; then
+	#		echo "Continuing without DLSS"
+	#	else
+	#		exit 1
+	#	fi
+	#fi
 
 	echo "Installing NVIDIA NGX libs..."
-	cd $
+	ORIG_DIR=$(pwd)
+	TEMP_DIR=$(mktemp -d)
+	cleanup() {
+	  cd "$ORIG_DIR"
+	  rm -rf "$TEMP_DIR"
+	  echo "Cleaned up temporary directory: $TEMP_DIR"
+	}
+
+	trap cleanup EXIT
+
+	cd $TEMP_DIR
+	echo "Working in temporary directory: $TEMP_DIR"
+
 	nvidia_driver_version=$(cat /sys/module/nvidia/version)
-	wget https://download.nvidia.com/XFree86/Linux-x86_64/$nvidia_driver_version/NVIDIA-Linux-x86_64-$nvidia_driver_version.run
+	/usr/bin/wget https://download.nvidia.com/XFree86/Linux-x86_64/$nvidia_driver_version/NVIDIA-Linux-x86_64-$nvidia_driver_version.run
 
 	rootfs="/snap/steam/current/x86_rootfs/"
 	 
@@ -77,7 +89,7 @@ if [[ "$(cat "$FEX_STEAM_NGX_LIB_VERSION_FILE")" != "$nvidia_driver_version" ]];
 
 	popd >/dev/null
 
-	echo $nvidia_driver_version > /home/$USER/snap/steam/common/.fex-emu/nvidia_ngx_config/ngx_lib_version.txt
+	echo $nvidia_driver_version > $FEX_STEAM_NGX_LIB_VERSION_FILE
 fi
 
 

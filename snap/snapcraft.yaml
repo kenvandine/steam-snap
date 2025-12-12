@@ -27,6 +27,15 @@ lint:
         - lib32/**
         - usr/lib32/**
 
+package-repositories:
+  - type: apt
+    url: http://ports.ubuntu.com/ubuntu-ports/
+    suites: [noble, noble-updates]
+    components: [main, universe]
+    architectures: [arm64]
+    key-id: F6ECB3762474EDA9D21B7022871920D1991BC93C
+    key-server: keyserver.ubuntu.com
+
 plugs:
   gtk-3-themes:
     interface: content
@@ -112,6 +121,7 @@ parts:
   fex-config:
     plugin: dump
     source: ./fex_config
+    stage-packages: [wget]
   
 apps:
   steam:
