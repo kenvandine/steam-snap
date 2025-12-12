@@ -28,6 +28,10 @@ lint:
         - usr/lib32/**
 
 plugs:
+  gaming-graphics-core24:
+    interface: content
+    target: $SNAP/graphics
+    default-provider: gaming-graphics-core24
   gtk-3-themes:
     interface: content
     target: $SNAP/share/themes
@@ -61,13 +65,9 @@ plugs:
     read:
       - $HOME/snap/steam/common
       - $HOME/snap/steam/common/.fex-emu
-      - $HOME/.fex-emu
-      - $HOME/.config/proton-fixes
     write:
       - $HOME/snap/steam/common
       - $HOME/snap/steam/common/.fex-emu
-      - $HOME/.fex-emu
-      - $HOME/.config/proton-fixes
   desktop:
     mount-host-font-cache: false
   shmem:
@@ -95,8 +95,9 @@ hooks:
 
 parts:
   gaming-graphics-core24:
-    plugin: dump
-    source: ./gaming-graphics-core24
+    plugin: nil
+    build-snaps:
+      - gaming-graphics-core24/candidate
   amd64-content:
     plugin: dump
     source: ./steam_218_amd64
