@@ -4,10 +4,26 @@ mkdir -p /home/$USER/snap/steam/common/.fex-emu/
 #export FEX_SERVERSOCKETPATH=/home/mitchell/snap/steam/current/.fex-emu/FEXServer.Socket
 export FEX_SERVERSOCKETPATH=/home/$USER/snap/steam/common/.fex-emu/FEXServer.Socket
 export FEX_APP_CONFIG_LOCATION=/snap/steam/current/fex_config/
+export FEX_ROOTFS=$SNAP_USER_COMMON/x86_rootfs/
 
 mkdir -p /home/$USER/snap/steam/common/.fex-emu/nvidia_ngx_config
 export FEX_STEAM_NGX_LIB_VERSION_FILE=/home/$USER/snap/steam/common/.fex-emu/nvidia_ngx_config/ngx_lib_version.txt
 touch $FEX_STEAM_NGX_LIB_VERSION_FILE
+
+# Refresh the rootfs from the snap if it mismatches (except the nvidia parts, which we expect to mismatch
+# due to the copied NGX DLL)
+SNAP_ROOTFS_HASH="$(sha256sum /snap/steam/current/x86_rootfs.tar.gz | cut -d ' ' -f 1)"
+HOME_ROOTFS_HASH="$(sha256sum $SNAP_USER_COMMON/x86_rootfs.tar.gz | cut -d ' ' -f 1)"
+
+
+if [ "$SNAP_ROOTFS_HASH" != "$HOME_ROOTFS_HASH" ]; then
+	echo "Refreshing rootfs - difference detected"
+	echo "SNAP_ROOFTS: $SNAP_ROOTFS_HASH"
+	echo "HOME_ROOTFS: $HOME_ROOTFS_HASH"
+	cp -f /snap/steam/current/x86_rootfs.tar.gz $SNAP_USER_COMMON
+	rm -rf $SNAP_USER_COMMON/x86_rootfs
+	tar -xvf $SNAP_USER_COMMON/x86_rootfs.tar.gz -C $SNAP_USER_COMMON
+fi
 
 nvidia_driver_version=$(cat /sys/module/nvidia/version 2>/dev/null || true)
 
@@ -36,14 +52,14 @@ if [ "$(cat "$FEX_STEAM_NGX_LIB_VERSION_FILE")" != "$nvidia_driver_version" ]; t
 	echo "Working in temporary directory: $TEMP_DIR"
 
 	nvidia_driver_version=$(cat /sys/module/nvidia/version)
-	/usr/bin/wget https://download.nvidia.com/XFree86/Linux-x86_64/$nvidia_driver_version/NVIDIA-Linux-x86_64-$nvidia_driver_version.run
+	/snap/steam/current/usr/bin/wget https://download.nvidia.com/XFree86/Linux-x86_64/$nvidia_driver_version/NVIDIA-Linux-x86_64-$nvidia_driver_version.run
 
-	rootfs="/snap/steam/current/x86_rootfs/"
+	rootfs="$FEX_ROOTFS"
 	 
 	runfile=$(realpath ./NVIDIA-Linux-x86_64-$nvidia_driver_version.run)
 	runfilename=$(basename $runfile)
 	 
-	sh $runfile -x # || return -1
+	/snap/steam/current/usr/bin/FEXBash "$runfile -x" # || return -1
 
 	pushd . >/dev/null
 	cd ${runfilename%.run}
@@ -56,7 +72,7 @@ if [ "$(cat "$FEX_STEAM_NGX_LIB_VERSION_FILE")" != "$nvidia_driver_version" ]; t
 	# the NGX dlls. It does this by calling dlopen on the library and then obtains
 	# its location in the filesystem using dlinfo. Once it has the location of the
 	# DSO the relative offset of the NGX dlls is always the same. If libGLX_nvidia.so
-	# can't be successfully dlopen'd the NGX dlls will not be installed into the
+	# cant be successfully dlopend the NGX dlls will not be installed into the
 	# application Wine prefix.
 	#
 	# Because the proton script is using dlopen it is necessary to also have all
