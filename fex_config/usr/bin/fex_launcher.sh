@@ -105,6 +105,7 @@ if [ "$(cat "$FEX_STEAM_NGX_LIB_VERSION_FILE" 2>/dev/null || true)" != "$nvidia_
 	done
 
 	popd >/dev/null
+	chmod +r $rootfs/usr/lib/x86_64-linux-gnu/nvidia/wine/*
 
 	echo $nvidia_driver_version > $FEX_STEAM_NGX_LIB_VERSION_FILE
 fi

@@ -1,5 +1,5 @@
 name: steam
-version: '218'
+version: '231'
 summary: Launcher for the Steam software distribution service
 description: |
   Steam is a software distribution service with an online store, automated
@@ -100,12 +100,12 @@ parts:
       - gaming-graphics-core24/candidate
   amd64-content:
     plugin: dump
-    source: https://github.com/MitchellAugustin/steam-snap/releases/download/amd64-components-12-12-25.1/steam_218_amd64.tar.gz
+    source: https://github.com/MitchellAugustin/steam-snap/releases/download/amd64-components-12-12-25.3/steam_231_amd64.tar.gz
     organize:
-        steam_218_amd64: .
+        steam_231_amd64: .
   amd64-rootfs:
     plugin: dump
-    source: https://github.com/MitchellAugustin/steam-snap/releases/download/amd64-components-12-12-25.1/amd64_rootfs.tar.gz
+    source: https://github.com/MitchellAugustin/steam-snap/releases/download/amd64-components-12-12-25.3/amd64_rootfs.tar.gz
     organize:
         amd64_rootfs: .
   fex-emu:
