@@ -96,8 +96,6 @@ slots:
     write:
       - $HOME/snap/steam/common
       - $HOME/snap/steam/common/.fex-emu
-      - $HOME/.fex-emu
-      - $HOME/.config/proton-fixes
 
 hooks:
   configure:
