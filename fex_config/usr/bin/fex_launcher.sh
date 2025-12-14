@@ -1,7 +1,6 @@
 #!/bin/bash
 mkdir -p /home/$USER/snap/steam/common/.fex-emu/
 #mkdir -p /home/$USER/.fex-emu/
-#export FEX_SERVERSOCKETPATH=/home/mitchell/snap/steam/current/.fex-emu/FEXServer.Socket
 export FEX_SERVERSOCKETPATH=/home/$USER/snap/steam/common/.fex-emu/FEXServer.Socket
 export FEX_APP_CONFIG_LOCATION=/snap/steam/current/fex_config/
 export FEX_ROOTFS=$SNAP_USER_COMMON/x86_rootfs/
@@ -16,20 +15,21 @@ SNAP_ROOTFS_HASH="$(sha256sum /snap/steam/current/x86_rootfs.tar.gz | cut -d ' '
 HOME_ROOTFS_HASH="$(sha256sum $SNAP_USER_COMMON/x86_rootfs.tar.gz | cut -d ' ' -f 1)"
 
 if [ "$SNAP_ROOTFS_HASH" != "$HOME_ROOTFS_HASH" ]; then
-	#zenity --info --text="Your x86 compatibility libraries are being updated. It may take up to 10 minutes for Steam to launch." --title="Updating x86 components" &
+	zenity --info --text="Your x86 compatibility libraries are being updated. It may take up to 10 minutes for Steam to launch." --title="Updating x86 components" &
 	echo "Refreshing rootfs - difference detected"
 	echo "SNAP_ROOFTS: $SNAP_ROOTFS_HASH"
 	echo "HOME_ROOTFS: $HOME_ROOTFS_HASH"
 	cp -f /snap/steam/current/x86_rootfs.tar.gz $SNAP_USER_COMMON
 	rm -rf $SNAP_USER_COMMON/x86_rootfs
 	tar -xvf $SNAP_USER_COMMON/x86_rootfs.tar.gz -C $SNAP_USER_COMMON
+	echo "" > $FEX_STEAM_NGX_LIB_VERSION_FILE
 fi
 
 nvidia_driver_version=$(cat /sys/module/nvidia/version 2>/dev/null || true)
 
 # Check if the NGX library needs updates, and install if so.
 if [ "$(cat "$FEX_STEAM_NGX_LIB_VERSION_FILE" 2>/dev/null || true)" != "$nvidia_driver_version" ]; then
-	#zenity --info --text="Your NVIDIA NGX components require an upgrade to enable DLSS functionality. This may take up to 10 minutes (or potentially longer with poor internet connectivity)." --title="Updating NVIDIA NGX components" &
+	zenity --info --text="Your NVIDIA NGX components require an upgrade to enable DLSS functionality. This may take up to 10 minutes (or potentially longer with poor internet connectivity)." --title="Updating NVIDIA NGX components" &
 	#if [ -z "$nvidia_driver_version" ]; then
 	#	if zenity --question --text="Could not detect NVIDIA driver version. DLSS libraries will not be installed. (This is expected if you are not using an NVIDIA GPU.)" --title="Launch Steam without DLSS?"; then
 	#		echo "Continuing without DLSS"

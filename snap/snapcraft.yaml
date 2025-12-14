@@ -138,6 +138,7 @@ parts:
     stage-packages:
       - fex-emu-armv8.0
       - fex-emu-wine
+      - zenity
   fex-config:
     plugin: dump
     source: ./fex_config
