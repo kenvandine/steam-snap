@@ -112,6 +112,22 @@ parts:
   amd64-content:
     plugin: dump
     source: https://github.com/MitchellAugustin/steam-snap/releases/download/amd64-components-12-13-25.1/steam_231_amd64.tar.gz
+    stage:
+      - -usr/bin/curl
+      - -usr/bin/fc-cache
+      - -usr/bin/fc-cat
+      - -usr/bin/fc-conflist
+      - -usr/bin/fc-list
+      - -usr/bin/fc-match
+      - -usr/bin/fc-pattern
+      - -usr/bin/fc-query
+      - -usr/bin/fc-scan
+      - -usr/bin/fc-validate
+      - -usr/bin/gtk-update-icon-cache
+      - -usr/bin/update-mime-database
+      - -usr/bin/zenity
+      - -usr/libexec/dconf-service
+      - -usr/share/doc/libcups2t64/changelog.Debian.gz
     organize:
         steam_231_amd64: .
   amd64-rootfs:
