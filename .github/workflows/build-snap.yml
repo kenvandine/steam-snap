@@ -8,7 +8,7 @@ on:
 
 jobs:
   snap:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-arm64
     steps:
     - uses: actions/checkout@v5
     - uses: snapcore/action-build@v1
