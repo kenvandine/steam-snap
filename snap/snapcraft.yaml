@@ -57,9 +57,6 @@ plugs:
     default-provider: gtk-common-themes
   dot-local-share-steam:
     interface: personal-files
-    read:
-      - $HOME/.local/share/Steam
-      - $HOME/Steam
     write:
       - $HOME/.local/share/Steam
       - $HOME/Steam
@@ -71,14 +68,6 @@ plugs:
     interface: personal-files
     write:
       - $HOME/.local/share/icons
-  user-fex-config:
-    interface: personal-files
-    read:
-      - $HOME/snap/steam/common
-      - $HOME/snap/steam/common/.fex-emu
-    write:
-      - $HOME/snap/steam/common
-      - $HOME/snap/steam/common/.fex-emu
   desktop:
     mount-host-font-cache: false
   shmem:
@@ -90,12 +79,6 @@ slots:
     interface: dbus
     bus: session
     name: com.steampowered.PressureVessel.LaunchAlongsideSteam
-  user-fex-config-slot:
-    interface: content
-    content: socket-directory
-    write:
-      - $HOME/snap/steam/common
-      - $HOME/snap/steam/common/.fex-emu
 
 hooks:
   configure:
