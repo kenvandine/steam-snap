@@ -12,7 +12,9 @@ cat amd64_rootfs/x86_rootfs/usr/share/vulkan/icd.d/nvidia_icd.json
     }
 }
 ^ This is what fixed the "missing vulkan" errors
-4. Re-tar and upload to remote
+4. On an amd64 machine, `snap download gaming-graphics-core24 --channel kisak-fresh/candidate
+5. unsquashfs the components into the correct directories in the x86 rootfs
+6. Re-tar and upload to remote
 
 The steam-amd64 artifact can be generated as follows:
 1. On an amd64 machine, `snap download steam`
