@@ -6,12 +6,12 @@
 # shellcheck disable=SC2034
 START=$(date +%s.%N)
 
-#if ! snapctl is-connected "gaming-graphics-core24"; then
-#  echo "ERROR: not connected to the gaming-mesa content interface."
-#  echo "To connect:"
-#  echo "sudo snap connect steam:gaming-graphics-core24 gaming-graphics-core24"
-#  exit 1
-#fi
+if ! snapctl is-connected "gaming-graphics-core24"; then
+  echo "ERROR: not connected to the gaming-mesa content interface."
+  echo "To connect:"
+  echo "sudo snap connect steam:gaming-graphics-core24 gaming-graphics-core24"
+  exit 1
+fi
 
 # ensure_dir_exists calls `mkdir -p` if the given path is not a directory.
 # This speeds up execution time by avoiding unnecessary calls to mkdir.
@@ -176,8 +176,6 @@ append_dir LIBVA_DRIVERS_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/$ARCH/dri"
 append_dir LIBVA_DRIVERS_PATH "$SNAP_DESKTOP_RUNTIME/usr/lib/x86_64-linux-gnu/dri"
 append_dir LIBVA_DRIVERS_PATH "$SNAP_DESKTOP_RUNTIME/graphics/usr/lib/$ARCH/dri"
 append_dir LIBVA_DRIVERS_PATH "$SNAP_DESKTOP_RUNTIME/graphics/usr/lib/x86_64-linux-gnu/dri"
-
-echo "STUFF $SNAP_DESKTOP_RUNTIME/graphics/usr/lib/x86_64-linux-gnu/dri"
 
 # Set where the VDPAU drivers are located
 export VDPAU_DRIVER_PATH="/usr/lib/$ARCH/vdpau/"
