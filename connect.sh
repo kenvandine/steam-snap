@@ -15,4 +15,5 @@ sudo snap connect steam:steam-support
 sudo snap connect steam:system-observe
 sudo snap connect steam:uinput
 sudo snap connect steam:network-observe
+sudo snap connect steam:gaming-graphics-core24 gaming-graphics-core24
 sudo snap connections steam

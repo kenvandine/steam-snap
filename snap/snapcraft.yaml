@@ -89,7 +89,7 @@ parts:
   gaming-graphics-core24:
     plugin: nil
     build-snaps:
-      - gaming-graphics-core24/candidate
+      - gaming-graphics-core24
   amd64-content:
     plugin: dump
     source: https://github.com/MitchellAugustin/steam-snap/releases/download/amd64-components-12-16-25.2/steam_231_amd64.tar.gz
@@ -109,6 +109,7 @@ parts:
       - -usr/bin/zenity
       - -usr/libexec/dconf-service
       - -usr/share/doc/libcups2t64/changelog.Debian.gz
+      - -bin/desktop-launch
     organize:
         steam_231_amd64: .
   amd64-rootfs:
@@ -129,6 +130,13 @@ parts:
     plugin: nil
     stage-packages:
       - wget
+  desktop-launch:
+    plugin: dump
+    source: ./src/
+    organize:
+        desktop-launch: bin/
+    stage:
+      - bin/desktop-launch
 
   
 apps:
