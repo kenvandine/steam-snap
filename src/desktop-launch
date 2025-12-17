@@ -395,6 +395,10 @@ export HOME="$SNAP_USER_COMMON"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+export DRIRC_CONFIGDIR="$SNAP_DESKTOP_RUNTIME/usr/share/drirc.d"
 
-/snap/steam/current/usr/lib/steam/bin_steam.sh -no-cef-sandbox
+echo "ENV: $(env)"
+echo "desktop-launch: $@"
+"$@"
+
 #killall steam-runtime-launcher-service
