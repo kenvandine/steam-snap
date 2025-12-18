@@ -109,5 +109,5 @@ if [ "$(cat "$FEX_STEAM_NGX_LIB_VERSION_FILE" 2>/dev/null || true)" != "$nvidia_
 	echo $nvidia_driver_version > $FEX_STEAM_NGX_LIB_VERSION_FILE
 fi
 
-echo "launch_glxgears.sh: $@"
-$SNAP/usr/bin/FEXBash "$SNAP/bin/desktop-launch $SNAP_USER_COMMON/x86_rootfs/usr/bin/glxgears $@"
+echo "launch_vkcube.sh: $@"
+$SNAP/usr/bin/FEXBash "$SNAP/bin/desktop-launch $SNAP_USER_COMMON/x86_rootfs/usr/bin/vkcube $@"

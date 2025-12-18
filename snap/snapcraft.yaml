@@ -185,3 +185,11 @@ apps:
       - opengl
       - x11
       - desktop
+  vkcube:
+    command: usr/bin/launch_vkcube.sh
+    environment:
+      LIBGL_DEBUG: verbose
+    plugs:
+      - opengl
+      - x11
+      - desktop
