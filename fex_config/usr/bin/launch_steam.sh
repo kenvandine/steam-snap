@@ -110,4 +110,4 @@ if [ "$(cat "$FEX_STEAM_NGX_LIB_VERSION_FILE" 2>/dev/null || true)" != "$nvidia_
 fi
 
 echo "launch_steam.sh: $@"
-$SNAP/bin/desktop-launch /snap/steam/current/usr/lib/steam/bin_steam.sh -no-cef-sandbox
+$SNAP/usr/bin/FEXBash "$SNAP/bin/desktop-launch $SNAP/usr/lib/steam/bin_steam.sh -no-cef-sandbox $@"
